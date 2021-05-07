@@ -16,9 +16,8 @@ from sklearn.metrics import accuracy_score
 
 '''
 -----------------------------------------------------------------------
-Using training dataset to find the best parameters of each modules, and 
-to choose the best module by comparing between different modules.
-'''
+Using training dataset to find the best parameters of each modules, 
+and to choose the best module by comparing between different modules.
 '''
 # MLE on all features[baseline], 0138 features, all features with poly (d = 2), all features with PCA (c = 7)
 T = 10
@@ -70,10 +69,9 @@ print("-------")
 print("MLE on all features with pca 7: mean var")
 print("Etrain " + str(np.mean(np.array(result_all_pca)[:,4])) + " " + str(np.var(np.array(result_all_pca)[:,4])))
 print("Eval " + str(np.mean(np.array(result_all_pca)[:,5])) + " " + str(np.var(np.array(result_all_pca)[:,5])))
-'''
+
 
 # Ridge regression: choose best lambda
-'''
 L = [0.1, 1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 80, 100]
 T = 10
 k = 5
@@ -108,10 +106,9 @@ plt.plot(np.log10(L), mean_Eval, 'r', label = 'Eval')
 plt.title("Ridge Regression best lambda: " + str(best_lambda)+" "+str(mean_Etrain[np.argmin(mean_Eval)])+" "+str(mean_Eval[np.argmin(mean_Eval)]))
 plt.legend()
 plt.show()
-'''
+
 
 # Lasso regression (l is the lambda in course;)
-'''
 L = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 80, 100]
 T = 10
 k = 5
@@ -146,10 +143,8 @@ plt.plot(np.log10(L), mean_Eval, 'r', label = 'Eval')
 plt.title("Lasso Regression best lambda: " + str(best_lambda)+" "+str(mean_Etrain[np.argmin(mean_Eval)])+" "+str(mean_Eval[np.argmin(mean_Eval)]))
 plt.legend()
 plt.show()
-'''
 
 # KNN (baseline)
-'''
 N_K = np.arange(1, 10, 1)
 weights = ['uniform', 'distance']
 T = 10
@@ -191,10 +186,8 @@ plt.plot(N_K, mean_Eval[9:18],   label = 'Eval_distance')
 plt.title("KNN (weights = 'uniform' or 'distance'; k = 1 to 9)")
 plt.legend()
 plt.show()
-'''
 
 # CART (baseline for tree based module)
-'''
 decrease = [1000, 2000, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000, 25000, 50000]
 T = 10
 k = 5
@@ -224,10 +217,8 @@ var_Eval = np.var(np.array(result)[:,:,6], axis = 0)
 mean_depth = np.mean(np.array(result)[:,:,0], axis = 0)
 mean_leafs = np.mean(np.array(result)[:,:,1], axis = 0)
 '''
-'''
 best_lambda = L[np.argmin(mean_Eval)]
 print("Lasso Regression best lambda: " + str(best_lambda)+" "+str(mean_Etrain[np.argmin(mean_Eval)])+" "+str(mean_Eval[np.argmin(mean_Eval)]))
-'''
 '''
 plt.subplot(221)
 plt.plot(np.log10(decrease), mean_Etrain, 'b', label = 'mean_Etrain')
@@ -246,7 +237,6 @@ plt.plot(np.log10(decrease), mean_leafs, label = 'mean_leafs')
 plt.legend()
 plt.suptitle("CART with different min_impurity_decrease")
 plt.show()
-'''
 '''
 decrease = 10**3.5
 leafs = np.arange(10,100,2)
@@ -308,7 +298,6 @@ plt.show()
 '''
 
 # Random Forest: use the choosen tree from CART
-'''
 decrease = 10**3.5
 leafs = 34
 N_trees=[50,100, 200, 300, 400, 500]
@@ -381,10 +370,9 @@ for i in range(3,6):
             ax.plot(N_trees, var_Ete[:,i].reshape(-1,1), label='var_Eval')
             plt.legend()
 plt.show()
-'''
+
 
 # Gradiant Boosting Regression:
-'''
 N_estimate=[10, 100, 300, 400, 500, 600, 700, 800, 2000]
 N_depth=1
 tol = 1e-4
@@ -436,13 +424,13 @@ plt.plot(np.log10(N_estimate), var_Etrain, label='var_Etrain')
 plt.plot(np.log10(N_estimate), var_Eval, label='var_Eval')
 plt.legend()
 plt.show()
-'''
+
+
 
 
 '''
 --------------------------------------------------------------------
 Using training dataset to choose the best module by comparing between different modules.
-'''
 '''
 # using cross-validation to compare between different modules:
 T = 10
@@ -590,8 +578,13 @@ print(" Etrain[mean var] " + str(np.mean(np.array(result_boosting)[:,3])) + " " 
 print(" Eval[mean var] " + str(np.mean(np.array(result_boosting)[:,4])) + " " + str(np.var(np.array(result_boosting)[:,4])))
 print(" feature importance of best Eval: " )
 print(np.array(result_boosting)[np.argmin(np.array(result_boosting)[:,4])][0])
-'''
 
+
+
+'''
+------------------------------------------------------------
+choose the best model, train it with whole training datae and save the trained model
+'''
 
 # train the final module with whole training data 
 (X_test, y_test) = utils.load("/Users/mac-pro/Desktop/20Fall/EE660/HW/Final/code/testing.csv")
